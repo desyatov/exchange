@@ -10,7 +10,7 @@
 #import "ViewModeling.h"
 
 @protocol ExchangeService;
-@class ExchangeListViewModel;
+@class ExchangeListViewModel, MoneyController;
 
 @interface ExchangeViewModel : NSObject <ViewModeling>
 
@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong, readonly) ExchangeListViewModel *topListViewModel;
 @property (nonatomic, strong, readonly) ExchangeListViewModel *bottomListViewModel;
-@property (nonatomic, strong, readonly) RACCommand *loadRates;
+@property (nonatomic, strong, readonly) MoneyController *moneyController;
+@property (nonatomic, strong, readonly) RACCommand *loadDataCommand;
+@property (nonatomic, strong, readonly) RACCommand *exchangeCommand;
 
 @end

@@ -23,14 +23,17 @@
                 viewModel.active = active.boolValue;
             }
         }];
-        
-        RAC(self, active) = [[[[RACObserve(self, items) ignore:nil] map:^id _Nullable(NSArray <MoneyInputViewModel *>  *_Nullable items) {
+        @weakify(self);
+        [[[[[[RACObserve(self, items) ignore:nil] map:^id _Nullable(NSArray <MoneyInputViewModel *>  *_Nullable items) {
             return [items map:^id(MoneyInputViewModel *obj, NSUInteger idx) {
                 return obj.activeSignal;
             }];
-        }] flattenMap:^__kindof RACSignal * _Nullable(NSArray * _Nullable signals) {
+        }] map:^id (NSArray * _Nullable signals) {
             return [[RACSignal combineLatest:signals] or];
-        }] distinctUntilChanged];
+        }] switchToLatest] distinctUntilChanged] subscribeNext:^(NSNumber  *_Nullable x) {
+            @strongify(self);
+            self.active = x.boolValue;
+        }];
         
         RAC(self, currentViewModel) = [RACSignal combineLatest:@[
                                                                    [RACObserve(self, items) ignore:nil],
@@ -43,7 +46,7 @@
         _currentViewModelSignal = [RACObserve(self, currentViewModel) ignore:nil];
         _currentViewModelDidChange = [[self.currentViewModelSignal map:^id (MoneyInputViewModel *x) {
             @weakify(x);
-            return [[RACSignal merge:@[x.selectedSignal, x.valueSignal]] map:^id _Nullable(id  _Nullable value) {
+            return [[RACSignal merge:@[x.valueSignal]] map:^id _Nullable(id  _Nullable value) {
                 @strongify(x);
                 return x;
             }];

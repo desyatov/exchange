@@ -23,6 +23,7 @@
 		681BDDF51E50E77200B40358 /* Balance.m in Sources */ = {isa = PBXBuildFile; fileRef = 681BDDF41E50E77200B40358 /* Balance.m */; };
 		681BDDF81E50E7F900B40358 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 681BDDF71E50E7F900B40358 /* Account.m */; };
 		681BDDFC1E53761D00B40358 /* MoneyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 681BDDFB1E53761D00B40358 /* MoneyController.m */; };
+		681BDDFF1E5610DA00B40358 /* NSNumber+Compare.m in Sources */ = {isa = PBXBuildFile; fileRef = 681BDDFE1E5610DA00B40358 /* NSNumber+Compare.m */; };
 		681D834E1E4BA0E600EA90D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 681D834D1E4BA0E600EA90D8 /* main.m */; };
 		681D83511E4BA0E600EA90D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 681D83501E4BA0E600EA90D8 /* AppDelegate.m */; };
 		681D83591E4BA0E600EA90D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 681D83581E4BA0E600EA90D8 /* Assets.xcassets */; };
@@ -81,6 +82,8 @@
 		681BDDF71E50E7F900B40358 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
 		681BDDFA1E53761D00B40358 /* MoneyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoneyController.h; sourceTree = "<group>"; };
 		681BDDFB1E53761D00B40358 /* MoneyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyController.m; sourceTree = "<group>"; };
+		681BDDFD1E5610DA00B40358 /* NSNumber+Compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Compare.h"; sourceTree = "<group>"; };
+		681BDDFE1E5610DA00B40358 /* NSNumber+Compare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+Compare.m"; sourceTree = "<group>"; };
 		681D83491E4BA0E600EA90D8 /* exchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = exchange.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		681D834D1E4BA0E600EA90D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		681D834F1E4BA0E600EA90D8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -287,6 +290,8 @@
 			children = (
 				681D838F1E4BAA6400EA90D8 /* Network */,
 				681D83901E4BAA6400EA90D8 /* Models */,
+				681BDDFD1E5610DA00B40358 /* NSNumber+Compare.h */,
+				681BDDFE1E5610DA00B40358 /* NSNumber+Compare.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -517,6 +522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				681BDDF51E50E77200B40358 /* Balance.m in Sources */,
+				681BDDFF1E5610DA00B40358 /* NSNumber+Compare.m in Sources */,
 				681BDDCD1E4CF11A00B40358 /* Exchange.m in Sources */,
 				681BDDFC1E53761D00B40358 /* MoneyController.m in Sources */,
 				681BDDDD1E4F98F700B40358 /* MoneyInputViewModel.m in Sources */,

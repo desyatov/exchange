@@ -20,62 +20,32 @@
 
 @interface ExchangeViewModel ()
 @property (nonatomic, strong, readwrite) id <ExchangeService> service;
-@property (nonatomic, strong, readonly) MoneyController *moneyController;
+@property (nonatomic, strong, readwrite) MoneyController *moneyController;
+@property (nonatomic, strong, readwrite) ExchangeListViewModel *topListViewModel;
+@property (nonatomic, strong, readwrite) ExchangeListViewModel *bottomListViewModel;
+@property (nonatomic, strong, readonly) RACCommand *validationCommand;
 @end
 
 @implementation ExchangeViewModel
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        
-        _topListViewModel = [[ExchangeListViewModel alloc] init];
-        _bottomListViewModel = [[ExchangeListViewModel alloc] init];
-        _moneyController = [[MoneyController alloc] init];
-        _moneyController.balance = [self createBalance];
-    }
-    return self;
-}
-
-
 - (void)setupViewModel {
     
     @weakify(self);
-    _loadRates = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id input) {
+    _loadDataCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id input) {
         @strongify(self);
         return [[[self.service fetchRateSet] collect] map:^id(NSArray *rates) {
             return [[Exchange alloc] initWithRates:rates];
         }];
     }];
     
-    RAC(self.moneyController, exchange) = [self.loadRates.executionSignals switchToLatest];
+    RAC(self.moneyController, exchange) = [self.loadDataCommand.executionSignals switchToLatest];
     
-//    [[RACSignal combineLatest:@[
-//                              self.topListViewModel.currentViewModelSignal,
-//                              self.bottomListViewModel.currentViewModelSignal,
-//                              [RACObserve(self.moneyController, exchange) ignore:nil]
-//                              ]
-//                      reduce:^(MoneyInputViewModel *topMoneyInput, MoneyInputViewModel *bottomMoneyInput, Exchange *exchange) {
-//                          topMoneyInput.targetCurrency = bottomMoneyInput.sourceCurrency;
-//                          bottomMoneyInput.targetCurrency = topMoneyInput.sourceCurrency;
-//                          return topMoneyInput;
-//                      }] subscribe:[RACSubject subject]];
-
     [[[[RACSignal combineLatest:@[
                                 self.topListViewModel.currentViewModelDidChange,
                                 self.bottomListViewModel.currentViewModelDidChange,
                                 [RACObserve(self.moneyController, exchange) ignore:nil]
                                 ]
                        reduce:^id(MoneyInputViewModel *topMoneyInput, MoneyInputViewModel *bottomMoneyInput, Exchange *exchange) {
-//                           RACTupleUnpack(MoneyInputViewModel *topMoneyInput, NSDecimalNumber *topValue) = sourceTuple;
-//                           RACTupleUnpack(MoneyInputViewModel *bottomMoneyInput, NSDecimalNumber *bottomValue) = targetTuple;
-                           if (bottomMoneyInput.selected) {
-                               topMoneyInput.selected = NO;
-                           } else if (topMoneyInput.selected) {
-                               bottomMoneyInput.selected = NO;
-                           }
-                           
                            topMoneyInput.targetCurrency = bottomMoneyInput.sourceCurrency;
                            bottomMoneyInput.targetCurrency = topMoneyInput.sourceCurrency;
                            
@@ -91,36 +61,62 @@
                            return viewModel;
                        }] subscribe:[RACSubject subject]];
     
-    [[RACObserve(self.moneyController, exchange) ignore:nil] subscribeNext:^(id  _Nullable x) {
+    
+    RAC(self.topListViewModel, active) = [[[RACObserve(self.bottomListViewModel, active) distinctUntilChanged] skipUntilBlock:^BOOL(NSNumber * _Nullable x) {
+        return x.boolValue;
+    }] not];
+    RAC(self.bottomListViewModel, active) = [[[RACObserve(self.topListViewModel, active) distinctUntilChanged] skipUntilBlock:^BOOL(NSNumber * _Nullable x) {
+        return x.boolValue;
+    }] not];
+    
+    RAC(self, topListViewModel.currentViewModel.selected) = [[[[RACObserve(self.bottomListViewModel, currentViewModel.selected) ignore:nil] not] distinctUntilChanged] skip:1];
+    RAC(self, bottomListViewModel.currentViewModel.selected) = [[[[RACObserve(self.topListViewModel, currentViewModel.selected) ignore:nil] not] distinctUntilChanged] skip:1];
+    
+    _validationCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
         @strongify(self);
-        self.topListViewModel.items = @[
-                                       [self moneyInputViewModelWithCurrency:[Currency USD]],
-                                       [self moneyInputViewModelWithCurrency:[Currency GBP]],
-                                       [self moneyInputViewModelWithCurrency:[Currency EUR]],
-                                       ];
-        self.bottomListViewModel.items = @[
-                                       [self moneyInputViewModelWithCurrency:[Currency USD]],
-                                       [self moneyInputViewModelWithCurrency:[Currency GBP]],
-                                       [self moneyInputViewModelWithCurrency:[Currency EUR]],
-                                       ];
+        return [[[self.topListViewModel.currentViewModelSignal take:1] map:^id(MoneyInputViewModel *viewModel) {
+            return viewModel.validateSignal;
+        }] switchToLatest];
     }];
     
-    RAC(self, topListViewModel.active) = [[[RACObserve(self.bottomListViewModel, active) not] distinctUntilChanged] skip:1];
-    RAC(self, bottomListViewModel.active) = [[[RACObserve(self.topListViewModel, active) not] distinctUntilChanged] skip:1];
+    _exchangeCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+        @strongify(self);
+        return [[[self.validationCommand execute:nil] take:1] flattenMap:^__kindof RACSignal * _Nullable(id value) {
+            return [[RACSignal combineLatest:@[
+                                        [self.topListViewModel.currentViewModelSignal take:1],
+                                        [self.bottomListViewModel.currentViewModelSignal take:1],
+                                        [[RACObserve(self.moneyController, balance) ignore:nil] take:1]
+                                        ] reduce:^id (MoneyInputViewModel *topMoneyInput, MoneyInputViewModel *bottomMoneyInput, Balance *balance){
+                                            [balance plus:[Money moneyWithCurrency:bottomMoneyInput.sourceCurrency amount:bottomMoneyInput.value]];
+                                            [balance minus:[Money moneyWithCurrency:topMoneyInput.sourceCurrency amount:topMoneyInput.value]];
+                                            return nil;
+                                        }] ignoreValues];
+        }];
+        
+        
+    }];
     
-    [self.loadRates execute:nil];
+    
+    self.topListViewModel.items = @[
+                                    [self moneyInputViewModelWithCurrency:[Currency USD] isSource:YES],
+                                    [self moneyInputViewModelWithCurrency:[Currency GBP] isSource:YES],
+                                    [self moneyInputViewModelWithCurrency:[Currency EUR] isSource:YES],
+                                    ];
+    self.bottomListViewModel.items = @[
+                                       [self moneyInputViewModelWithCurrency:[Currency EUR]],
+                                       [self moneyInputViewModelWithCurrency:[Currency GBP]],
+                                       [self moneyInputViewModelWithCurrency:[Currency USD]],
+                                       ];
+
 }
 
 - (MoneyInputViewModel *)moneyInputViewModelWithCurrency:(Currency *)currency {
-    return [[MoneyInputViewModel alloc] initWithCurrency:currency moneyController:self.moneyController];
+    return [self moneyInputViewModelWithCurrency:currency isSource:NO];
 }
-
-
-- (Balance *)createBalance {
-    Account *accountUSD = [[Account alloc] initWithMoney:[Money moneyWithCurrency:[Currency USD] amount:[NSDecimalNumber decimalNumberWithString:@"100"]]];
-    Account *accountGBP = [[Account alloc] initWithMoney:[Money moneyWithCurrency:[Currency GBP] amount:[NSDecimalNumber decimalNumberWithString:@"100"]]];
-    Account *accountEUR = [[Account alloc] initWithMoney:[Money moneyWithCurrency:[Currency EUR] amount:[NSDecimalNumber decimalNumberWithString:@"100"]]];
-    return [[Balance alloc] initWithAccounts:@[accountUSD, accountGBP, accountEUR]];
+- (MoneyInputViewModel *)moneyInputViewModelWithCurrency:(Currency *)currency isSource:(BOOL)isSource {
+    MoneyInputViewModel *viewModel = [[MoneyInputViewModel alloc] initWithCurrency:currency moneyController:self.moneyController];
+    viewModel.source = isSource;
+    return viewModel;
 }
 
 @end

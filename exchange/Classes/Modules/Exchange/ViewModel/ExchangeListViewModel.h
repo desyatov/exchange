@@ -13,6 +13,7 @@
 
 @interface ExchangeListViewModel : NSObject <CaruselViewModeling>
 
+@property (nonatomic, strong, readwrite) NSString *identifier;
 @property (nonatomic, strong, readonly) MoneyInputViewModel *currentViewModel;
 @property (nonatomic, strong, readonly) RACSignal *currentViewModelSignal;
 @property (nonatomic, strong, readonly) RACSignal *currentViewModelDidChange;

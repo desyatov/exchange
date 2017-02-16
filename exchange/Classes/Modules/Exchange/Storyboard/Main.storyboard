@@ -5,7 +5,6 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -38,22 +37,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sq6-9Q-NaB">
-                                <rect key="frame" x="16" y="64" width="343" height="300"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="300"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JD8-tl-5eL" customClass="ExchangeListView">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="150"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="euk-jU-Qnl" customClass="iCarousel">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="130"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                                             </view>
-                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="BS7-YR-KHo">
-                                                <rect key="frame" x="0.0" y="130" width="343" height="20"/>
+                                            <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="BS7-YR-KHo">
+                                                <rect key="frame" x="0.0" y="130" width="375" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="dD9-0m-zRi"/>
                                                 </constraints>
                                             </pageControl>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.95294117649999999" green="0.58823529409999997" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="BS7-YR-KHo" firstAttribute="leading" secondItem="JD8-tl-5eL" secondAttribute="leading" id="74o-ed-PXJ"/>
                                             <constraint firstAttribute="bottom" secondItem="BS7-YR-KHo" secondAttribute="bottom" id="82d-bq-jTe"/>
@@ -69,19 +68,20 @@
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H7I-2h-Z8y" customClass="ExchangeListView">
-                                        <rect key="frame" x="0.0" y="150" width="343" height="150"/>
+                                        <rect key="frame" x="0.0" y="150" width="375" height="150"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iwK-vN-qwZ" customClass="iCarousel">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="130"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
-                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Zm1-NX-Utu">
-                                                <rect key="frame" x="0.0" y="130" width="343" height="20"/>
+                                            <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Zm1-NX-Utu">
+                                                <rect key="frame" x="0.0" y="130" width="375" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="D7Y-bL-iwC"/>
                                                 </constraints>
                                             </pageControl>
                                         </subviews>
-                                        <color key="backgroundColor" red="1" green="0.48510204950000002" blue="0.99394079120000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.10630767617449664" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="Zm1-NX-Utu" firstAttribute="top" secondItem="iwK-vN-qwZ" secondAttribute="bottom" id="08I-mD-bo4"/>
                                             <constraint firstAttribute="trailing" secondItem="Zm1-NX-Utu" secondAttribute="trailing" id="AhM-sr-hHE"/>
@@ -97,7 +97,7 @@
                                         </connections>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="23G-zC-R7D"/>
                                     <constraint firstItem="JD8-tl-5eL" firstAttribute="leading" secondItem="Sq6-9Q-NaB" secondAttribute="leading" id="5c5-Lb-pco"/>
@@ -114,8 +114,8 @@
                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Sq6-9Q-NaB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="7K5-Vb-pGD"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Sq6-9Q-NaB" secondAttribute="trailing" id="XCu-SB-Zlb"/>
-                            <constraint firstItem="Sq6-9Q-NaB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="igq-u9-52F"/>
+                            <constraint firstAttribute="trailing" secondItem="Sq6-9Q-NaB" secondAttribute="trailing" id="XCu-SB-Zlb"/>
+                            <constraint firstItem="Sq6-9Q-NaB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="igq-u9-52F"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="LpM-vp-Y9h">

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class Currency, MoneyController;
+@class Currency, MoneyController, Money;
 
 @interface MoneyInputViewModel : NSObject
 
@@ -18,12 +18,13 @@
 @property (nonatomic, strong, readwrite) NSDecimalNumber *value;
 @property (nonatomic, strong, readonly) RACSignal *valueSignal;
 @property (nonatomic, copy, readwrite) NSString *textValue;
-@property (nonatomic, assign, readwrite) BOOL hasEnoughMoney;
+@property (nonatomic, assign, readonly) BOOL hasEnoughMoney;
 @property (nonatomic, assign, readwrite) BOOL active;
 @property (nonatomic, assign, readwrite) BOOL selected;
 @property (nonatomic, strong, readonly) RACSignal *selectedSignal;
 @property (nonatomic, strong, readonly) RACSignal *activeSignal;
-//@property (nonatomic, assign, readwrite, getter=isSource) BOOL source;
+@property (nonatomic, strong, readonly) RACSignal *validateSignal;
+@property (nonatomic, assign, readwrite, getter=isSource) BOOL source;
 
 @property (nonatomic, strong, readonly) Currency *sourceCurrency;
 @property (nonatomic, strong, readwrite) Currency *targetCurrency;

@@ -25,16 +25,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.navigationItem.rightBarButtonItem.rac_command = self.viewModel.exchangeCommand;
     [self setupNavigationBar];
     self.sourceExchangeListView.viewModel = self.viewModel.topListViewModel;
     self.targetExchangeListView.viewModel = self.viewModel.bottomListViewModel;
     @weakify(self);
-    [self.viewModel.loadRates.errors subscribeNext:^(NSError * _Nullable x) {
+    [[RACSignal merge:@[self.viewModel.loadDataCommand.errors, self.viewModel.exchangeCommand.errors]] subscribeNext:^(NSError * _Nullable x) {
         @strongify(self);
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:x.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:NULL]];
         [self presentViewController:alert animated:YES completion:NULL];
     }];
+    
+    [self.viewModel.loadDataCommand execute:nil];
 }
 
 

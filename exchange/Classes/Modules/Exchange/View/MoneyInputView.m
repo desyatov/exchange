@@ -19,7 +19,11 @@
     [super awakeFromNib];
     self.backgroundColor = [UIColor clearColor];
     
+    UIColor *normalTextColor = self.moneyAvailableLabel.textColor;
+    UIColor *moneyUnavailableTextColor = [UIColor redColor];
+    
     self.sumTextField.text = @"";
+    self.sumTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"0" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
     
     self.exchangeRateLabel.hidden = YES;
     
@@ -29,6 +33,9 @@
     RAC(self.currencyLabel, text) = [RACObserve(self, viewModel.currencyString) distinctUntilChanged];
     RAC(self.moneyAvailableLabel, text) = [[RACObserve(self, viewModel.moneyAvailableString) distinctUntilChanged] map:^id _Nullable(NSString *value) {
         return [NSString stringWithFormat:@"You have %@", value];
+    }];
+    RAC(self.moneyAvailableLabel, textColor) = [[RACObserve(self, viewModel.hasEnoughMoney) ignore:nil] map:^id(NSNumber *hasEnoughMoney) {
+        return hasEnoughMoney.boolValue ? normalTextColor : moneyUnavailableTextColor;
     }];
 
     [[RACSignal combineLatest:@[[self.sumTextField.rac_textSignal distinctUntilChanged], RACObserve(self, viewModel)]] subscribeNext:^(RACTuple  * _Nullable x) {
@@ -48,7 +55,7 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.viewModel.selected = NO;
+//    self.viewModel.selected = NO;
 }
 
 - (BOOL)canBecomeFirstResponder {
