@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yYZ-pv-Cca">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="nbe-pW-ynT">
+            <objects>
+                <navigationController id="yYZ-pv-Cca" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WaJ-e0-tRL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="DTr-Qf-uGI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aeZ-eF-g6Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1097" y="-42"/>
+        </scene>
+        <!--Exchange View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ExchangeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sq6-9Q-NaB">
+                                <rect key="frame" x="16" y="64" width="343" height="300"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JD8-tl-5eL" customClass="ExchangeListView">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="150"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="euk-jU-Qnl" customClass="iCarousel">
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="130"/>
+                                            </view>
+                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="BS7-YR-KHo">
+                                                <rect key="frame" x="0.0" y="130" width="343" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="dD9-0m-zRi"/>
+                                                </constraints>
+                                            </pageControl>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.95294117649999999" green="0.58823529409999997" blue="0.035294117649999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="BS7-YR-KHo" firstAttribute="leading" secondItem="JD8-tl-5eL" secondAttribute="leading" id="74o-ed-PXJ"/>
+                                            <constraint firstAttribute="bottom" secondItem="BS7-YR-KHo" secondAttribute="bottom" id="82d-bq-jTe"/>
+                                            <constraint firstItem="euk-jU-Qnl" firstAttribute="top" secondItem="JD8-tl-5eL" secondAttribute="top" id="Cfb-in-231"/>
+                                            <constraint firstAttribute="trailing" secondItem="BS7-YR-KHo" secondAttribute="trailing" id="SXq-8z-Vuj"/>
+                                            <constraint firstAttribute="trailing" secondItem="euk-jU-Qnl" secondAttribute="trailing" id="ik0-bL-t7L"/>
+                                            <constraint firstItem="BS7-YR-KHo" firstAttribute="top" secondItem="euk-jU-Qnl" secondAttribute="bottom" id="vCu-7d-gzk"/>
+                                            <constraint firstItem="euk-jU-Qnl" firstAttribute="leading" secondItem="JD8-tl-5eL" secondAttribute="leading" id="wJ1-Dp-iye"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="carusel" destination="euk-jU-Qnl" id="WeW-7b-gBH"/>
+                                            <outlet property="pageControl" destination="BS7-YR-KHo" id="3xN-bC-wvb"/>
+                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H7I-2h-Z8y" customClass="ExchangeListView">
+                                        <rect key="frame" x="0.0" y="150" width="343" height="150"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iwK-vN-qwZ" customClass="iCarousel">
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="130"/>
+                                            </view>
+                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Zm1-NX-Utu">
+                                                <rect key="frame" x="0.0" y="130" width="343" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="D7Y-bL-iwC"/>
+                                                </constraints>
+                                            </pageControl>
+                                        </subviews>
+                                        <color key="backgroundColor" red="1" green="0.48510204950000002" blue="0.99394079120000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Zm1-NX-Utu" firstAttribute="top" secondItem="iwK-vN-qwZ" secondAttribute="bottom" id="08I-mD-bo4"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zm1-NX-Utu" secondAttribute="trailing" id="AhM-sr-hHE"/>
+                                            <constraint firstItem="Zm1-NX-Utu" firstAttribute="leading" secondItem="H7I-2h-Z8y" secondAttribute="leading" id="BTt-gZ-yta"/>
+                                            <constraint firstAttribute="trailing" secondItem="iwK-vN-qwZ" secondAttribute="trailing" id="Bxs-9W-lXg"/>
+                                            <constraint firstItem="iwK-vN-qwZ" firstAttribute="top" secondItem="H7I-2h-Z8y" secondAttribute="top" id="Oyx-tA-LuF"/>
+                                            <constraint firstItem="iwK-vN-qwZ" firstAttribute="leading" secondItem="H7I-2h-Z8y" secondAttribute="leading" id="aVx-5q-w9f"/>
+                                            <constraint firstAttribute="bottom" secondItem="Zm1-NX-Utu" secondAttribute="bottom" id="xXd-1g-AMP"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="carusel" destination="iwK-vN-qwZ" id="TMP-cm-FJI"/>
+                                            <outlet property="pageControl" destination="Zm1-NX-Utu" id="xEx-95-VdW"/>
+                                        </connections>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="23G-zC-R7D"/>
+                                    <constraint firstItem="JD8-tl-5eL" firstAttribute="leading" secondItem="Sq6-9Q-NaB" secondAttribute="leading" id="5c5-Lb-pco"/>
+                                    <constraint firstItem="H7I-2h-Z8y" firstAttribute="top" secondItem="JD8-tl-5eL" secondAttribute="bottom" id="BBj-cm-UIP"/>
+                                    <constraint firstItem="H7I-2h-Z8y" firstAttribute="height" secondItem="JD8-tl-5eL" secondAttribute="height" id="LAD-SY-4gn"/>
+                                    <constraint firstItem="JD8-tl-5eL" firstAttribute="top" secondItem="Sq6-9Q-NaB" secondAttribute="top" id="RfF-If-LUp"/>
+                                    <constraint firstAttribute="trailing" secondItem="H7I-2h-Z8y" secondAttribute="trailing" id="nQc-C6-uqy"/>
+                                    <constraint firstAttribute="bottom" secondItem="H7I-2h-Z8y" secondAttribute="bottom" id="qQs-ef-IYW"/>
+                                    <constraint firstAttribute="trailing" secondItem="JD8-tl-5eL" secondAttribute="trailing" id="suA-ob-f2o"/>
+                                    <constraint firstItem="H7I-2h-Z8y" firstAttribute="leading" secondItem="Sq6-9Q-NaB" secondAttribute="leading" id="xvd-xj-ekA"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Sq6-9Q-NaB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="7K5-Vb-pGD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Sq6-9Q-NaB" secondAttribute="trailing" id="XCu-SB-Zlb"/>
+                            <constraint firstItem="Sq6-9Q-NaB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="igq-u9-52F"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="LpM-vp-Y9h">
+                        <barButtonItem key="rightBarButtonItem" title="Exchange" id="JgG-ny-KoX"/>
+                    </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="sourceExchangeListView" destination="JD8-tl-5eL" id="mXA-sA-aCE"/>
+                        <outlet property="targetExchangeListView" destination="H7I-2h-Z8y" id="s44-b6-x6L"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-279" y="-43"/>
+        </scene>
+    </scenes>
+</document>
