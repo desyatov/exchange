@@ -13,9 +13,3 @@
 - (void)setupViewModel;
 
 @end
-
-@protocol CaruselViewModeling <NSObject>
-
-@property (nonatomic, strong, readonly) NSArray *items;
-
-@end

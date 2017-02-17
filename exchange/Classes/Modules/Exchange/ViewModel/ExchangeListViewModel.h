@@ -11,7 +11,7 @@
 
 @class MoneyInputViewModel;
 
-@interface ExchangeListViewModel : NSObject <CaruselViewModeling>
+@interface ExchangeListViewModel : NSObject
 
 @property (nonatomic, strong, readwrite) NSString *identifier;
 @property (nonatomic, strong, readonly) MoneyInputViewModel *currentViewModel;
