@@ -107,6 +107,11 @@
                                        [self moneyInputViewModelWithCurrency:[Currency GBP]],
                                        [self moneyInputViewModelWithCurrency:[Currency USD]],
                                        ];
+    
+    [[RACSignal interval:30 onScheduler:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSDate * _Nullable x) {
+        @strongify(self);
+        [self.loadDataCommand execute:nil];
+    }];
 
 }
 
